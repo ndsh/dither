@@ -4,7 +4,7 @@ PImage p;
 void setup() {
   size(800, 800);
   surface.setLocation(0,0);
-  
+  colorMode(HSB, 360, 100, 100);
   p = loadImage("medusa.jpg");
   d = new Dither();
   d.setCanvas(400, 400);

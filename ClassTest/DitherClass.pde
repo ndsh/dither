@@ -26,7 +26,7 @@ class Dither {
   
   Dither() {
     pg = createGraphics(196, 14);
-    
+    // if colorMode is on HSB, input should be true
     //src = loadImage("medusa.jpg");
     //res = createImage(src.width, src.height, RGB);
   }
@@ -50,6 +50,8 @@ class Dither {
   
   
   PGraphics floyd_steinberg() {
+    push();
+    colorMode(RGB, 255, 255, 255);
     PGraphics temp = createGraphics(src.width, src.height);
     temp.beginDraw();
     temp.image(src, 0, 0);
@@ -84,12 +86,14 @@ class Dither {
       }
     }
     result.endDraw();
-    
+    pop();
     return result;
   }
   
   // ordered
   PGraphics bayer() {
+    push();
+    colorMode(RGB, 255, 255, 255);
     PGraphics temp = createGraphics(src.width, src.height);
     temp.beginDraw();
     temp.image(src, 0, 0);
@@ -117,10 +121,13 @@ class Dither {
       }
     }
     result.endDraw();
+    pop();
     return result;
   }
   
   PGraphics atkinson() {
+    push();
+    colorMode(RGB, 255, 255, 255);
     PGraphics temp = createGraphics(src.width, src.height);
     temp.beginDraw();
     temp.image(src, 0, 0);
@@ -154,15 +161,17 @@ class Dither {
         // Draw
         result.stroke(newpixel);   
         result.point(x,y);
-        
       }
     }
     result.endDraw();
+    pop();
     return result;
     
   }
   
   PGraphics rand() {
+    push();
+    colorMode(RGB, 255, 255, 255);
     PGraphics temp = createGraphics(src.width, src.height);
     temp.beginDraw();
     temp.image(src, 0, 0);
@@ -178,21 +187,18 @@ class Dither {
         color oldpixel = temp.get(x, y);
         color newpixel = findClosestColor( color(brightness(oldpixel) + random(-64,64)) );      
         temp.set(x, y, newpixel);
-        
-        
         result.stroke(newpixel);      
-       
         result.point(x,y);
-       
       }
     }
     result.endDraw();   
+    pop();
     return result;
   }
   
   // Threshold function
   color findClosestColor(color c) {
-    color r;
+    color r;    
     if (brightness(c) < 128) {
       r = color(0);
     } else {
